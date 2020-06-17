@@ -56,11 +56,17 @@ function draw(transfers) {
 }
 
 window.addEventListener("load", () => {
-    draw([
+    const defaultHashData = [
         ['Person one', 'Person two', 300000],
         ['Person two', 'Person 3', 20000],
         ['Person 3', 'Person One', 10000],
         ['Unknown person', 'Person One', 5000],
         ['Unknown person', 'Person 3', 1200],
-    ]);
+    ].map(line => line.join(',')).join('|')
+
+    if (location.hash === '') {
+        location.hash = defaultHashData
+    }
+    const items = location.hash.slice(1).split('|').map(item => item.split(',').map(decodeURIComponent))
+    draw(items);
 });
